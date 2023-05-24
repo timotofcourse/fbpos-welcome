@@ -48,6 +48,10 @@ def install_games():
     os.system('pkexec pacaman -S steam heroic-games-launcher-beta pcsx2 minecraft-launcher')
     os.system('zenity --info --text="Game Set Installed"')
 
+def install_office_suite():
+    os.system('pkexec pacman -S wps-office')
+    os.system('zenity --info --text="Office Suite Installed"')
+
 # Application Widgets
 
 welcome_label = customtkinter.CTkLabel(welcome, text='Welcome to FBP OS. We will help you to configure your new system')
@@ -70,6 +74,9 @@ software_center.pack(padx=20, pady=10)
 
 install_game_launchers = customtkinter.CTkButton(welcome, text='Install some game launchers', command=install_games)
 install_game_launchers.pack(padx=20, pady=10)
+
+office_suite = customtkinter.CTkButton(welcome, text='Install Office Suite', command=install_office_suite)
+office_suite.pack(padx=20, pady=10)
 
 # Launch Application
 
