@@ -24,6 +24,11 @@ def install_nvidia_driver():
     os.system('pkexec pacman -S nvidia nvidia-utils nvidia-settings')
     os.system('zenity --info --text="Nvidia Driver Installed')
 
+def install_nvidia_optimus():
+    os.system('pkexec pacman -S bumblebee')
+    os.system('yay -S envycontrol optimus-manager optimus-manager-qt-kde')
+    os.system('zenity --info --text="Nvidia Optimus Installed')
+
 # Application Widgets
 
 welcome_label = customtkinter.CTkLabel(welcome, text='Welcome to FBP OS. We will help you to configure your new system')
@@ -37,6 +42,9 @@ timeshift.pack(padx=20, pady=10)
 
 nvidia_driver = customtkinter.CTkButton(welcome, text='Install Nvidia Driver (nvidia users only)', command=install_nvidia_driver)
 nvidia_driver.pack(padx=20, pady=10)
+
+bumblebee = customtkinter.CTkButton(welcome, text='Install Nvidia Optimus (Hybrid graphics only)', command=install_nvidia_optimus)
+bumblebee.pack(padx=20, pady=10)
 
 # Launch Application
 
