@@ -1,0 +1,9 @@
+[Desktop Entry]
+Exec=fbpos-welcome
+Icon=/usr/share/icons/fbpos-logo.png
+Type=Application
+SingleMainWindow=true
+
+Name=FBP OS Welcome
+GenericName=Welcome
+Comment=FBP OS tool to make it simple for new users to do simple tasks

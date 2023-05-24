@@ -1,0 +1,39 @@
+
+def opentimeshift():
+    subprocess.run("pkexec timeshift-gtk", shell=True)
+
+def installnvidia():
+    nvinstall = subprocess.Popen("pkexec pacman -S nvidia nvidia-utils nvidia-settings", shell=True)
+    nvinstall.wait()
+    subprocess.run('zenity --info --text="Nvidia Driver Installed"', shell=True)
+
+def installoptimus():
+    optim1 = subprocess.Popen("pkexec pacman -S bumblebee", shell=True)
+    optim1.wait()
+    optim2 = subprocess.Popen("yay -S envycontrol optimus-manager optimus-manager-qt-kde", shell=True)
+    optim2.wait()
+    subprocess.run('zenity --info --text="Nvidia Optimus Installed"', shell=True)
+
+def opensoftware():
+    subprocess.run("gnome-software", shell=False)
+
+def installgames():
+    gameinstall = subprocess.Popen("pkexec pacaman -S steam heroic-games-launcher-beta pcsx2 minecraft-launcher", shell=True)
+    gameinstall.wait()
+    subprocess.run('zenity --info --text="Game Set Installed"', shell=True)
+
+def installoffice():
+    officeinstall = subprocess.Popen("pkexec pacman -S wps-office", shell=True)
+    officeinstall.wait()
+    subprocess.run('zenity --info --text="Office Suite Installed"', shell=True)
+
+def security():
+    secinstall = subprocess.Popen("pkexec pacman -S authy bitwarden", shell=True)
+    secinstall.wait()
+    subprocess.run('zenity --info --text="Security Set Installed"', shell=True)
+
+def remote():
+    rem = subprocess.Popen("pkexec pacman -S rustdesk", shell=True)
+    rem.wait()
+    subprocess.run('zenity --info --text="Remote Control Set Installed"', shell=True)
+
