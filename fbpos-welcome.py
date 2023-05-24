@@ -56,6 +56,10 @@ def install_security_software():
     os.system('pkexec pacman -S authy bitwarden')
     os.system('zenity --info --text="Security Set Installed"')
 
+def remote_control_software():
+    os.system('pkexec pacman -S rustdesk')
+    os.system('zenity --info --text="Remote Control Set Installed"')
+
 # Application Widgets
 
 welcome_label = customtkinter.CTkLabel(welcome, text='Welcome to FBP OS. We will help you to configure your new system')
@@ -84,6 +88,9 @@ office_suite.pack(padx=20, pady=10)
 
 security_software = customtkinter.CTkButton(welcome, text='Install Account Security Software', command=install_security_software)
 security_software.pack(padx=20, pady=10)
+
+rustdesk = customtkinter.CTkButton(welcome, text='Install Remote Control Software', command=remote_control_software)
+rustdesk.pack(padx=20, pady=10)
 
 # Launch Application
 
