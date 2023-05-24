@@ -12,6 +12,10 @@ welcome.geometry('500x500')
 welcome.title('FBP OS Welcome')
 welcome._set_appearance_mode('System')
 
+discover = os.path.exists('usr/bin/plasma-discover')
+software = os.path.exists('usr/bin/gnome-software')
+mint = os.path.exists('mintinstall')
+
 # Functions
 
 def system_settings():
@@ -29,6 +33,17 @@ def install_nvidia_optimus():
     os.system('yay -S envycontrol optimus-manager optimus-manager-qt-kde')
     os.system('zenity --info --text="Nvidia Optimus Installed')
 
+def launch_software_center():
+    if discover:
+        os.system('plasma-discover')
+    elif software:
+        os.system('gnome-software')
+    elif mint:
+        os.system('mintinstall')
+    else:
+        os.system('zenity --info --text="No software center found"')
+
+
 # Application Widgets
 
 welcome_label = customtkinter.CTkLabel(welcome, text='Welcome to FBP OS. We will help you to configure your new system')
@@ -45,6 +60,9 @@ nvidia_driver.pack(padx=20, pady=10)
 
 bumblebee = customtkinter.CTkButton(welcome, text='Install Nvidia Optimus (Hybrid graphics only)', command=install_nvidia_optimus)
 bumblebee.pack(padx=20, pady=10)
+
+software_center = customtkinter.CTkButton(welcome, text='Software Center', command=launch_software_center)
+software_center.pack(padx=20, pady=10)
 
 # Launch Application
 
