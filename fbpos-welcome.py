@@ -20,6 +20,9 @@ def system_settings():
 def launch_timeshift():
     os.system('pkexec timeshift-gtk')
 
+def install_nvidia_driver():
+    os.system('pkexec pacman -S nvidia nvidia-utils nvidia-settings')
+    os.system('zenity --info --text="Nvidia Driver Installed')
 
 # Application Widgets
 
@@ -31,6 +34,9 @@ settings_button.pack(padx=20, pady=10)
 
 timeshift = customtkinter.CTkButton(welcome, text='Backup and restore', command=launch_timeshift)
 timeshift.pack(padx=20, pady=10)
+
+nvidia_driver = customtkinter.CTkButton(welcome, text='Install Nvidia Driver (nvidia users only)', command=install_nvidia_driver)
+nvidia_driver.pack(padx=20, pady=10)
 
 # Launch Application
 
