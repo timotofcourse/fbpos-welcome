@@ -44,6 +44,10 @@ def launch_software_center():
         os.system('zenity --info --text="No software center found"')
 
 
+def install_games():
+    os.system('pkexec pacaman -S steam heroic-games-launcher-beta pcsx2 minecraft-launcher')
+    os.system('zenity --info --text="Game Set Installed"')
+
 # Application Widgets
 
 welcome_label = customtkinter.CTkLabel(welcome, text='Welcome to FBP OS. We will help you to configure your new system')
@@ -63,6 +67,9 @@ bumblebee.pack(padx=20, pady=10)
 
 software_center = customtkinter.CTkButton(welcome, text='Software Center', command=launch_software_center)
 software_center.pack(padx=20, pady=10)
+
+install_game_launchers = customtkinter.CTkButton(welcome, text='Install some game launchers', command=install_games)
+install_game_launchers.pack(padx=20, pady=10)
 
 # Launch Application
 
