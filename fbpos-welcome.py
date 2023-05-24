@@ -8,7 +8,7 @@ import customtkinter
 # Application Properties
 
 welcome = customtkinter.CTk()
-welcome.geometry('500x500')
+welcome.geometry('500x600')
 welcome.title('FBP OS Welcome')
 welcome._set_appearance_mode('System')
 
@@ -60,6 +60,17 @@ def remote_control_software():
     os.system('pkexec pacman -S rustdesk')
     os.system('zenity --info --text="Remote Control Set Installed"')
 
+def install_vmware_guest_addons():
+    os.system('pkexec pacman -S open-vm-tools')
+    os.system('systemctl enable --now vmtoolsd.service vmware-vmblock-fuse.service')
+    os.system('zenity --info --text="Vmware guest addons installed. It\'s recommend that you restart your pc.')
+
+def install_virtualbox_addons():
+    os.system('pkexec pacman -S virtualbox-guest-utils xf86-video-vmware virtualbox-guest-utils-nox')
+    os.system('systemctl enable --now vboxservice.service')
+    os.system('systemctl enable --now systemd-modules-load.service')
+    os.system('zenity --info --text="Virtualbox guest addons installed. It\'s recommend that you restart your pc.')
+
 # Application Widgets
 
 welcome_label = customtkinter.CTkLabel(welcome, text='Welcome to FBP OS. We will help you to configure your new system')
@@ -91,6 +102,12 @@ security_software.pack(padx=20, pady=10)
 
 rustdesk = customtkinter.CTkButton(welcome, text='Install Remote Control Software', command=remote_control_software)
 rustdesk.pack(padx=20, pady=10)
+
+vmware_addons = customtkinter.CTkButton(welcome, text='Install Vmware Addons (Vmware virtual machines only)', command=install_vmware_guest_addons)
+vmware_addons.pack(padx=20, pady=10)
+
+virtualbox_addons = customtkinter.CTkButton(welcome, text='Install Virtualbox Addons (Virtualbox virtual machines only)', command=install_virtualbox_addons)
+virtualbox_addons.pack(padx=20, pady=10)
 
 # Launch Application
 
