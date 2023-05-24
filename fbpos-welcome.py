@@ -52,6 +52,10 @@ def install_office_suite():
     os.system('pkexec pacman -S wps-office')
     os.system('zenity --info --text="Office Suite Installed"')
 
+def install_security_software():
+    os.system('pkexec pacman -S authy bitwarden')
+    os.system('zenity --info --text="Security Set Installed"')
+
 # Application Widgets
 
 welcome_label = customtkinter.CTkLabel(welcome, text='Welcome to FBP OS. We will help you to configure your new system')
@@ -77,6 +81,9 @@ install_game_launchers.pack(padx=20, pady=10)
 
 office_suite = customtkinter.CTkButton(welcome, text='Install Office Suite', command=install_office_suite)
 office_suite.pack(padx=20, pady=10)
+
+security_software = customtkinter.CTkButton(welcome, text='Install Account Security Software', command=install_security_software)
+security_software.pack(padx=20, pady=10)
 
 # Launch Application
 
