@@ -4,6 +4,7 @@ import sys
 import os
 import tkinter
 import customtkinter
+import platform
 
 # Application Properties
 
@@ -15,6 +16,28 @@ welcome._set_appearance_mode('System')
 discover = os.path.exists('usr/bin/plasma-discover')
 software = os.path.exists('usr/bin/gnome-software')
 mint = os.path.exists('mintinstall')
+
+yay_bin = '/usr/bin/yay'
+
+distro_id = ''
+
+if not os.path.exists(yay_bin):
+    print('yay not found')
+    print('Checking if you are running FBP OS or Arch Linux')
+    if distro_id == 'fbpos':
+        print('Installing yay on FBP OS...')
+        os.system('pkexec pacman -S yay')
+    elif distro_id == 'arch':
+        print('Installing yay on Arch Linux')
+        os.system('pkexec pacman -S go base-devel pacman-contrib git')
+        os.system('git clone https://aur.archlinux.org/yay.git')
+        os.system('cd ./yay/')
+        os.system('updpkgsums')
+        os.system('makepkg --install')
+    else:
+        print('Not on FBP OS or Arch Linux')
+
+    
 
 # Functions
 
@@ -71,6 +94,11 @@ def install_virtualbox_addons():
     os.system('systemctl enable --now systemd-modules-load.service')
     os.system('zenity --info --text="Virtualbox guest addons installed. It\'s recommend that you restart your pc.')
 
+def fix_pacman():
+    os.system('pkexec pacman-key --init')
+    os.system('pkexec pacman-key --populate archlinux')
+    os.system('yes | pkexec pacman -Sy archlinux-keyring')
+
 # Application Widgets
 
 welcome_label = customtkinter.CTkLabel(welcome, text='Welcome to FBP OS. We will help you to configure your new system')
@@ -78,6 +106,9 @@ welcome_label.pack(padx=20, pady=10)
 
 settings_button = customtkinter.CTkButton(welcome, text='Settings', command=system_settings)
 settings_button.pack(padx=20, pady=10)
+
+fix_pacman_keys = customtkinter.CTkButton(welcome, text='Fix Pacman Keys', command=fix_pacman)
+fix_pacman_keys.pack(padx=20, pady=10)
 
 timeshift = customtkinter.CTkButton(welcome, text='Backup and restore', command=launch_timeshift)
 timeshift.pack(padx=20, pady=10)
