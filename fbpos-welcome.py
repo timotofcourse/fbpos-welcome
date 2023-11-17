@@ -4,6 +4,7 @@ import sys
 import os
 import tkinter
 import customtkinter
+import CTkMessagebox
 import platform
 
 # Application Properties
@@ -13,13 +14,21 @@ welcome.geometry('500x600')
 welcome.title('FBP OS Welcome')
 welcome._set_appearance_mode('System')
 
+# Software stores
+
 discover = os.path.exists('usr/bin/plasma-discover')
 software = os.path.exists('usr/bin/gnome-software')
 mint = os.path.exists('usr/bin/mintinstall')
 
+# AUR Helper
+
 yay_bin = '/usr/bin/yay'
 
+# Distro ID
+
 distro_id = ''
+
+# Check for yay and install if it's not installed
 
 if not os.path.exists(yay_bin):
     print('yay not found')
@@ -39,22 +48,23 @@ if not os.path.exists(yay_bin):
 
     
 
-# Functions
+# Custom messagebox function
+
+def infobox(text):
+    CTkMessagebox.CTkMessagebox(title="Info", message=text)
+
+
+# Open settings
 
 def system_settings():
     os.system('systemsettings')
 
+# Open timeshift
+
 def launch_timeshift():
     os.system('pkexec timeshift-gtk')
 
-def install_nvidia_driver():
-    os.system('pkexec pacman -S nvidia nvidia-utils nvidia-settings')
-    os.system('zenity --info --text="Nvidia Driver Installed')
-
-def install_nvidia_optimus():
-    os.system('pkexec pacman -S bumblebee')
-    os.system('yay -S envycontrol optimus-manager optimus-manager-qt-kde')
-    os.system('zenity --info --text="Nvidia Optimus Installed')
+# Open software store
 
 def launch_software_center():
     if discover:
@@ -64,40 +74,84 @@ def launch_software_center():
     elif mint:
         os.system('mintinstall')
     else:
-        os.system('zenity --info --text="No software center found"')
-
+        infobox(text="No software center found")
+        
+# Install a game meta-package
 
 def install_games():
     os.system('pkexec pacaman -S steam heroic-games-launcher-beta pcsx2 minecraft-launcher')
-    os.system('zenity --info --text="Game Set Installed"')
+    infobox(text="Game Set Installed")
+
+# Install office suite
 
 def install_office_suite():
     os.system('pkexec pacman -S wps-office')
-    os.system('zenity --info --text="Office Suite Installed"')
+    infobox(text="Office Suite Installed")
+
+# Install Authy and Bitwarden
 
 def install_security_software():
     os.system('pkexec pacman -S authy bitwarden')
-    os.system('zenity --info --text="Security Set Installed"')
+    infobox(text="Security Set Installed")
+
+# Install Rustdesk for remote control (not working on wayland)
 
 def remote_control_software():
     os.system('pkexec pacman -S rustdesk')
-    os.system('zenity --info --text="Remote Control Set Installed"')
+    infobox(text="Remote Control Set Installed")
+
+# Install Virtual Machine Guest Drivers
 
 def install_vmware_guest_addons():
     os.system('pkexec pacman -S open-vm-tools')
     os.system('systemctl enable --now vmtoolsd.service vmware-vmblock-fuse.service')
-    os.system('zenity --info --text="Vmware guest addons installed. It\'s recommend that you restart your pc.')
+    infobox(text="Vmware guest addons installed. It\'s recommend that you restart your pc.")
 
 def install_virtualbox_addons():
     os.system('pkexec pacman -S virtualbox-guest-utils xf86-video-vmware virtualbox-guest-utils-nox')
     os.system('systemctl enable --now vboxservice.service')
     os.system('systemctl enable --now systemd-modules-load.service')
-    os.system('zenity --info --text="Virtualbox guest addons installed. It\'s recommend that you restart your pc.')
+    infobox(text="Virtualbox guest addons installed. It's recommend that you restart your pc.")
+
+# Fix pacman keys
 
 def fix_pacman():
-    os.system('pkexec pacman-key --init')
-    os.system('pkexec pacman-key --populate archlinux')
-    os.system('yes | pkexec pacman -Sy archlinux-keyring')
+    os.system('fix-pacman-keyring')
+    fixed_pacman_keys()
+    
+def fixed_pacman_keys():
+    CTkMessagebox.CTkMessagebox(message="Pacman keys fixed.",
+                  icon="check", option_1="OK")
+
+# Install Proprietary nvidia driver
+
+def sure_install_nvidia_driver():
+
+    nvidiamsg = CTkMessagebox.CTkMessagebox(title="Are you sure?", message="Are you sure you want to install nvidia driver?",
+                        icon="question", option_1="Cancel", option_2="No", option_3="Yes")
+    nvidiaresponse = nvidiamsg.get()
+    
+    if nvidiaresponse=="Yes":
+        os.system('pkexec pacman -S nvidia nvidia-utils nvidia-settings')
+        infobox(text="Nvidia Driver Installed")
+    else:
+        pass
+
+# Install nvidia tools for hybrid graphics
+
+def sure_install_hybrid():
+
+    optimusmsg = CTkMessagebox.CTkMessagebox(title="Are you sure?", message="Are you sure you want to install nvidia otimus? This is only for hybrid graphic cards",
+                        icon="warning", option_1="Cancel", option_2="No", option_3="Yes")
+    optimusresponse = optimusmsg.get()
+    
+    if optimusresponse=="Yes":
+        os.system('pkexec pacman -S bumblebee')
+        os.system('yay -S envycontrol optimus-manager optimus-manager-qt-kde')
+        infobox(text="Nvidia Optimus Installed")     
+    else:
+        pass
+
 
 # Application Widgets
 
@@ -113,10 +167,10 @@ fix_pacman_keys.pack(padx=20, pady=10)
 timeshift = customtkinter.CTkButton(welcome, text='Backup and restore', command=launch_timeshift)
 timeshift.pack(padx=20, pady=10)
 
-nvidia_driver = customtkinter.CTkButton(welcome, text='Install Nvidia Driver (nvidia users only)', command=install_nvidia_driver)
+nvidia_driver = customtkinter.CTkButton(welcome, text='Install Nvidia Driver (nvidia users only)', command=sure_install_nvidia_driver)
 nvidia_driver.pack(padx=20, pady=10)
 
-bumblebee = customtkinter.CTkButton(welcome, text='Install Nvidia Optimus (Hybrid graphics only)', command=install_nvidia_optimus)
+bumblebee = customtkinter.CTkButton(welcome, text='Install Nvidia Optimus (Hybrid graphics only)', command=sure_install_hybrid)
 bumblebee.pack(padx=20, pady=10)
 
 software_center = customtkinter.CTkButton(welcome, text='Software Center', command=launch_software_center)
