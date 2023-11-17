@@ -71,36 +71,36 @@ def launch_software_center():
 # Install a game meta-package
 
 def install_games():
-    os.system('pkexec pacaman -S steam heroic-games-launcher-beta pcsx2 minecraft-launcher')
+    os.system('yay -S steam heroic-games-launcher-bin pcsx2 minecraft-launcher')
     infobox(text="Game Set Installed")
 
 # Install office suite
 
 def install_office_suite():
-    os.system('pkexec pacman -S wps-office')
+    os.system('yay -S wps-office')
     infobox(text="Office Suite Installed")
 
 # Install Authy and Bitwarden
 
 def install_security_software():
-    os.system('pkexec pacman -S authy bitwarden')
+    os.system('yay -S authy bitwarden')
     infobox(text="Security Set Installed")
 
 # Install Rustdesk for remote control (not working on wayland)
 
 def remote_control_software():
-    os.system('pkexec pacman -S rustdesk')
+    os.system('yay -S rustdesk')
     infobox(text="Remote Control Set Installed")
 
 # Install Virtual Machine Guest Drivers
 
 def install_vmware_guest_addons():
-    os.system('pkexec pacman -S open-vm-tools')
+    os.system('yay -S open-vm-tools')
     os.system('systemctl enable --now vmtoolsd.service vmware-vmblock-fuse.service')
     infobox(text="Vmware guest addons installed. It\'s recommend that you restart your pc.")
 
 def install_virtualbox_addons():
-    os.system('pkexec pacman -S virtualbox-guest-utils xf86-video-vmware virtualbox-guest-utils-nox')
+    os.system('yay -S virtualbox-guest-utils xf86-video-vmware virtualbox-guest-utils-nox')
     os.system('systemctl enable --now vboxservice.service')
     os.system('systemctl enable --now systemd-modules-load.service')
     infobox(text="Virtualbox guest addons installed. It's recommend that you restart your pc.")
