@@ -6,11 +6,12 @@ import tkinter
 import customtkinter
 import CTkMessagebox
 import platform
+import shutil
 
 # Application Properties
 
 welcome = customtkinter.CTk()
-welcome.geometry('500x600')
+welcome.geometry('500x800')
 welcome.title('FBP OS Welcome')
 welcome._set_appearance_mode('System')
 
@@ -28,13 +29,13 @@ software_label.pack(padx=20, pady=10)
 
 # Software stores
 
-discover = os.path.exists('usr/bin/plasma-discover')
-software = os.path.exists('usr/bin/gnome-software')
-mint = os.path.exists('usr/bin/mintinstall')
+discover = shutil.which('discover')
+software = shutil.which('gnome-software')
+mint = shutil.which('mintinstall')
 
 # AUR Helper
 
-yay_bin = '/usr/bin/yay'
+yay_bin = shutil.which('yay')
 
 # Distro ID
 
@@ -155,6 +156,7 @@ welcome_label.pack(padx=20, pady=10)
 settings_frame.pack(padx=20, pady=10)
 drivers_frame.pack(padx=20, pady=10)
 software_frame.pack(padx=20, pady=10)
+
 
 settings_button = customtkinter.CTkButton(settings_frame, text='Settings', command=system_settings)
 settings_button.pack(padx=20, pady=10)

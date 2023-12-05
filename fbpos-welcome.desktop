@@ -5,5 +5,5 @@ Type=Application
 SingleMainWindow=true
 
 Name=FBP OS Welcome
-GenericName=Welcome
+GenericName=Welcome to FBP OS
 Comment=FBP OS tool to make it simple for new users to do simple tasks
