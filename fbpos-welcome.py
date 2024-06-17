@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #!/usr/bin/env python
 
 import sys
@@ -197,3 +198,67 @@ virtualbox_addons.pack(padx=20, pady=10)
 # Launch Application
 
 welcome.mainloop()
+=======
+#!/usr/bin/env python
+
+import sys
+import os
+import tkinter
+import customtkinter
+import platform
+import find_binaries
+import usefull_functions
+import install_packages
+
+# Application Properties
+
+welcome = customtkinter.CTk()
+welcome.geometry('450x300')
+welcome.title('FBP OS Welcome')
+welcome._set_appearance_mode('System')
+
+
+distro_id = ''
+
+if not os.path.exists(find_binaries.yay_bin):
+    print('yay not found')
+    print('Checking if you are running FBP OS or Arch Linux')
+    if distro_id == 'fbpos':
+        print('Installing yay on FBP OS...')
+        os.system('pkexec pacman -S yay')
+    elif distro_id == 'arch':
+        print('Installing yay on Arch Linux')
+        os.system('pkexec pacman -S go base-devel pacman-contrib git')
+        os.system('git clone https://aur.archlinux.org/yay.git')
+        os.system('cd ./yay/')
+        os.system('updpkgsums')
+        os.system('makepkg --install')
+    else:
+        print('Not running FBP OS or Arch Linux')
+        # sys.exit()
+
+# Application Widgets
+
+welcome_label = customtkinter.CTkLabel(welcome, text='Welcome to FBP OS. We will help you to configure your new system')
+welcome_label.pack(padx=20, pady=10)
+
+install_packages = customtkinter.CTkButton(welcome, text='Install Packages', command=install_packages)
+install_packages.pack(padx=20, pady=10)
+
+settings_button = customtkinter.CTkButton(welcome, text='Settings', command=usefull_functions.system_settings)
+settings_button.pack(padx=20, pady=10)
+
+fix_pacman_keys = customtkinter.CTkButton(welcome, text='Fix Pacman Keys', command=usefull_functions.fix_pacman)
+fix_pacman_keys.pack(padx=20, pady=10)
+
+timeshift = customtkinter.CTkButton(welcome, text='Backup and restore', command=usefull_functions.launch_timeshift)
+timeshift.pack(padx=20, pady=10)
+
+software_center = customtkinter.CTkButton(welcome, text='Software Center', command=usefull_functions.launch_software_center)
+software_center.pack(padx=20, pady=10)
+
+
+# Launch Application
+
+welcome.mainloop()
+>>>>>>> e38f9db (Separated some functions in separate files)
