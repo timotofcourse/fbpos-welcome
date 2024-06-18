@@ -203,6 +203,8 @@ timeshift.pack(padx=20, pady=10)
 software_center = customtkinter.CTkButton(welcome, text='Software Center')
 software_center.pack(padx=20, pady=10)
 
-# Launch Application
+if __name__ == '__main__':
 
-welcome.mainloop()
+    # Launch Application
+
+    welcome.mainloop()
