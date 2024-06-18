@@ -38,8 +38,6 @@ if running_on.startswith('Win') or running_on.startswith('Darwin'):
     show_error(title='Error', message='This tool does not work on this platform')
     sys.exit()
 
-show_info(title='Linux', message='Everything, ok')
-
 # Look for packages
 
 packages_found = []
