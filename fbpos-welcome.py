@@ -104,21 +104,21 @@ def fix_pacman_keys_function():
 def install_packages_with_pacman(packages):
 
     os.system('pkexec pacman -S ' + packages + '--no-confirm')
-    show_info(title='Packages Installed', text=f'This packages have been installed')
+    show_info(title='Packages Installed', text=f'The packages: {packages} have been installed with pacman')
 
 # install packages with yay
 
 def install_packages_with_yay(packages):
         
     os.system('yay -S ' + packages + '--no-confirm')
-    show_info(title='Packages Installed', text=f'This packages: {packages} have been installed')
+    show_info(title='Packages Installed', text=f'This packages: {packages} have been installed with yay')
 
 # Install packages with flatpak
 
 def install_packages_with_flatpak(packages):
 
     os.system('flatpak install ' + packages)
-    show_info(title='Packages Installed', text=f'This packages: {packages} have been installed')
+    show_info(title='Packages Installed', text=f'This packages: {packages} have been installed with flatpak')
 
 # Enable services with systemd
 
